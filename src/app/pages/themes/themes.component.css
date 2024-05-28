@@ -1,0 +1,16 @@
+.cursor-pointer {
+    cursor: pointer;
+  }
+  
+  .transform {
+    transform: scale(1);
+    transition: transform 0.3s ease;
+  }
+  
+  .transition-transform:hover {
+    transform: scale(1.05);
+  }
+  
+  .rounded-md {
+    border-radius: 0.375rem;
+  }
