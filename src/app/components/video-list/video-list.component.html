@@ -1,37 +1,65 @@
-<home-navbar/>
-<main>
-  <div class="flex flex-col justify-center mt-4 px-10">
-    <div *ngIf="videos.length === 0">No videos available. Add some videos!</div>
-    <div *ngIf="videos.length > 0">
-      <div class="flex flex-row justify-center gap-2">
-        <div [routerLink]="['/videos', video.id]" class="rounded-lg overflow-hidden hover:bg-slate-100 hover:scale-105 transition-all" *ngFor="let video of videos">
-          <div class="relative">
-            <img [src]="video.thumbnail" alt="Thumbnail" class="w-[310px] h-[174px] object-cover" />
-            <div class="absolute inset-0 flex items-center justify-center">
-              <svg
-                class="size-12 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polygon points="6 3 20 12 6 21 6 3" />
-              </svg>
-            </div>
-          </div>
-          <div class="p-4 border-2 rounded-b-lg">
-            <h3 class="text-lg font-semibold">{{ video.video_name }}</h3>
-            <p class="text-sm text-gray-400"> Short descripcion </p>
-          </div>
-        </div>
+<home-navbar></home-navbar>
+
+<div class="filter-container flex justify-center gap-4 mb-4 mt-2">
+  <input type="text" [(ngModel)]="searchTitle" (input)="filter()" placeholder="Filtrar por titulo" class="p-2 border rounded">
+  <input type="text" [(ngModel)]="searchUsername" (input)="filter()" placeholder="Filtrar por usuario" class="p-2 border rounded">
+</div>
+
+<div class="flex flex-row justify-center gap-2" *ngIf="filteredVideos.length > 0; else noFilter">
+  <div [routerLink]="['/videos', video.id]" class="rounded-lg overflow-hidden hover:bg-slate-100 hover:scale-105 transition-all" *ngFor="let video of filteredVideos">
+    <div class="relative">
+      <img [src]="video.thumbnail" alt="Thumbnail" class="w-[310px] h-[174px] object-cover" />
+      <div class="absolute inset-0 flex items-center justify-center">
+        <svg
+          class="size-12 text-white"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polygon points="6 3 20 12 6 21 6 3" />
+        </svg>
       </div>
-      
+    </div>
+    <div class="p-4 border-2 rounded-b-lg">
+      <h3 class="text-lg font-semibold">{{ video.video_name }}</h3>
+      <p class="text-sm text-gray-400">{{video.username}}</p>
     </div>
   </div>
-</main>
-  
+</div>
+
+<ng-template #noFilter>
+  <div class="flex flex-row justify-center gap-2">
+    <div [routerLink]="['/videos', video.id]" class="rounded-lg overflow-hidden hover:bg-slate-100 hover:scale-105 transition-all" *ngFor="let video of videos">
+      <div class="relative">
+        <img [src]="video.thumbnail" alt="Thumbnail" class="w-[310px] h-[174px] object-cover" />
+        <div class="absolute inset-0 flex items-center justify-center">
+          <svg
+            class="size-12 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polygon points="6 3 20 12 6 21 6 3" />
+          </svg>
+          
+        </div>
+      </div>
+      <div class="p-4 border-2 rounded-b-lg">
+        <h3 class="text-lg font-semibold">{{ video.video_name }}</h3>
+        <p class="text-sm text-gray-400">{{video.username}}</p>
+      </div>
+    </div>
+  </div>
+</ng-template>

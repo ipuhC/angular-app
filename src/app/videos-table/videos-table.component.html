@@ -1,0 +1,31 @@
+<p>videos-table works!</p>
+<div class="table-container">
+    <div class="search-container">
+      <input type="text" [(ngModel)]="searchTerm" (input)="filter()" placeholder="Filter videos">
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th (click)="sort('thumbnail')">Thumbnail</th>
+          <th (click)="sort('title')">Title</th>
+          <th (click)="sort('description')">Description</th>
+          <th (click)="sort('views')">Views</th>
+          <th (click)="sort('likes')">Likes</th>
+          <th (click)="sort('dislikes')">Dislikes</th>
+          <th (click)="sort('date')">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let video of filteredVideos">
+          <td><img [src]="video.thumbnail" alt="Thumbnail" class="thumbnail-img"></td>
+          <td>{{ video.title }}</td>
+          <td>{{ video.description }}</td>
+          <td>{{ video.views }}</td>
+          <td>{{ video.likes }}</td>
+          <td>{{ video.dislikes }}</td>
+          <td>{{ video.date | date }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

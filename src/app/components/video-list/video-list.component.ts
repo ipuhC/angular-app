@@ -4,30 +4,37 @@ import { VideoService } from '../../services/video.service';
 import { Video } from '../../models/video.model';
 import { RouterModule } from '@angular/router';
 import { HomeNavbarComponent } from '../../shared/home-navbar/home-navbar.component';
-
+import { VideosTableComponent } from '../../videos-table/videos-table.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-video-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, HomeNavbarComponent],
+  imports: [CommonModule, RouterModule, HomeNavbarComponent, VideosTableComponent, FormsModule],
   templateUrl: './video-list.component.html',
   styleUrls: ['./video-list.component.css']
 })
 export class VideoListComponent implements OnInit {
   videos: Video[] = [];
-  constructor(private videoService: VideoService) { }
+  filteredVideos: Video[] = [];
+  searchTitle: string = '';
+  searchUsername: string = '';
+
+  constructor(private videoService: VideoService) {}
 
   ngOnInit(): void {
     this.videoService.getVideos().subscribe((data: Video[]) => {
       this.videos = data;
+      this.filteredVideos = data;
     });
   }
 
-  // deleteVideo(id: number): void {
-  //   if (confirm('Are you sure you want to delete this video?')) {
-  //     this.videoService.deleteVideo(id).subscribe(() => {
-  //       this.videos = this.videos.filter(video => video.id !== id);
-  //     });
-  //   }
-  // }
+  filter(): void {
+    console.log(this.searchTitle, this.searchUsername);
+    this.filteredVideos = this.videos.filter(video =>
+      video.video_name.toLowerCase().includes(this.searchTitle.toLowerCase()) &&
+      video.username.toLowerCase().includes(this.searchUsername.toLowerCase())
+    );
+    console.log('estos son los videos filtrados',this.filteredVideos);
+  }
 }
