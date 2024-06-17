@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
+import { AdminLayoutComponent } from '../shared/admin-layout/admin-layout.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, RouterLink,ReactiveFormsModule],
+  imports: [CommonModule, RouterLink,ReactiveFormsModule, AdminLayoutComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })

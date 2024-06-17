@@ -9,11 +9,12 @@ import {
 import { PersonaService } from '../../services/persona.service';
 import { Persona } from '../../models/persona.model';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { AdminLayoutComponent } from '../../shared/admin-layout/admin-layout.component';
 
 @Component({
   selector: 'app-create-user',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink,AdminLayoutComponent],
   templateUrl: './create-user.component.html',
   styleUrl: './create-user.component.css',
 })

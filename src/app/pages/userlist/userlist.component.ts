@@ -3,11 +3,12 @@ import { Persona } from '../../models/persona.model';
 import { PersonaService } from '../../services/persona.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { AdminLayoutComponent } from '../../shared/admin-layout/admin-layout.component';
 
 @Component({
   selector: 'app-userlist',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, AdminLayoutComponent],
   templateUrl: './userlist.component.html',
   styleUrl: './userlist.component.css'
 })

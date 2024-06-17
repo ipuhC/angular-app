@@ -1,17 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-import { HomeNavbarComponent } from '../shared/home-navbar/home-navbar.component';
+import { Component } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-home',
+  selector: 'home-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, HomeNavbarComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  imports: [CommonModule, RouterLink, RouterLinkActive],
+  templateUrl: './home-navbar.component.html',
+  styleUrl: './home-navbar.component.css'
 })
-export class HomeComponent implements OnInit{
+export class HomeNavbarComponent {
   primaryColor: string = '#000000';
   secondaryColor: string = '#4a4a4a';
   backgroundColor: string = '#ffffff';
@@ -33,5 +32,8 @@ export class HomeComponent implements OnInit{
   }
   isAdmin(){
     return this.authService.getRole() === 'admin';
+  }
+  isVideosPage(): boolean {
+    return this.router.url.startsWith('/videos');
   }
 }

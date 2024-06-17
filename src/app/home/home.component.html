@@ -1,44 +1,6 @@
 <!-- home.component.html -->
 <div [ngStyle]="{'background-color': backgroundColor}" class="h-screen w-full">
-  <header [ngStyle]="{'color': primaryColor}" class="sticky top-0 z-50 bg-white shadow-sm">
-    <div class="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6">
-      <a class="flex items-center" routerLink="#">
-        <span class="ml-2 text-lg font-semibold">Acme Inc</span>
-      </a>
-      <nav class="hidden space-x-4 md:flex">
-        <a class="hover:text-gray-900" routerLink="#">Features</a>
-        <a class="hover:text-gray-900" routerLink="#">Pricing</a>
-        <a class="hover:text-gray-900" routerLink="#">About</a>
-        <a class="hover:text-gray-900" routerLink="#">Contact</a>
-      </nav>
-      <div class="flex items-center space-x-4" *ngIf="!isAuthenticated()">
-        <a
-          class="rounded-md px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
-          routerLink="/login"
-          [ngStyle]="{'background-color': secondaryColor}"
-        >Login</a>
-        <a
-          class="rounded-md px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
-          routerLink="/register"
-          [ngStyle]="{'background-color': secondaryColor}"
-        >Sign Up</a>
-      </div>
-      <div class="flex items-center space-x-4" *ngIf="isAuthenticated()">
-        <a
-          (click)="logout()"
-          class="rounded-md px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
-          routerLink="/login"
-          [ngStyle]="{'background-color': secondaryColor}"
-        >Log out</a>
-        <a
-          *ngIf="isAdmin()"
-          class="rounded-md px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
-          routerLink="/userlist"
-          [ngStyle]="{'background-color': secondaryColor}"
-        >Admin Dashboard</a>
-      </div>
-    </div>
-  </header>
+  <home-navbar/>
   <main>
     <section class="bg-gray-100 py-20" [ngStyle]="{'background-color': backgroundColor}">
       <div class="container mx-auto max-w-7xl px-4 md:px-6">

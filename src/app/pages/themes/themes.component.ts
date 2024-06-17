@@ -3,10 +3,11 @@ import { Component } from '@angular/core';
 
 import { palettes } from '../../models/palettes';
 import { RouterLink } from '@angular/router';
+import { AdminLayoutComponent } from '../../shared/admin-layout/admin-layout.component';
 @Component({
   selector: 'app-themes',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, AdminLayoutComponent],
   templateUrl: './themes.component.html',
   styleUrl: './themes.component.css'
 })
