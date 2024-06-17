@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { tap } from 'rxjs/operators';
+import { user } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8000/api'; // Ajusta la URL base según tu configuración
-
+  private currentUser!: user;
   constructor(private http: HttpClient) { }
 
 
@@ -21,6 +22,7 @@ export class AuthService {
           if (response.token) {
             localStorage.setItem('authToken', response.token);
             localStorage.setItem('userRole', response.role);
+            localStorage.setItem('userName', response.name);
           }
         })
       );
@@ -45,6 +47,10 @@ export class AuthService {
 
   getRole(): string | null {
     return localStorage.getItem('userRole');
+  }
+  getCurrentUser(): any {
+    // Devuelve la información del usuario actual
+    return this.currentUser;
   }
 
   getToken(): string | null {

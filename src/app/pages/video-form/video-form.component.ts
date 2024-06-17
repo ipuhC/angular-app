@@ -26,6 +26,7 @@ import { HomeNavbarComponent } from '../../shared/home-navbar/home-navbar.compon
   styleUrl: './video-form.component.css',
 })
 export class VideoFormComponent {
+  currentUserName: string = localStorage.getItem('userName') || '';
   videoForm: FormGroup;
   isFormSubmitted = false;
   videoId: number | null = null;
@@ -66,11 +67,11 @@ export class VideoFormComponent {
         ],
       ],
       upload_date: ['', Validators.required],
-      username: ['', Validators.required],
       thumbnail: [null, Validators.required],
     });
   }
   ngOnInit(): void {
+    console.log('Current user:', localStorage.getItem('userName'));
     this.videoId = this.route.snapshot.params['id'];
     if (this.videoId) {
       this.videoService.getVideo(this.videoId).subscribe((video: Video) => {
@@ -103,11 +104,10 @@ export class VideoFormComponent {
       formData.append('dislikes', this.videoForm.value.dislikes);
       formData.append('views', this.videoForm.value.views);
       formData.append('upload_date', this.videoForm.value.upload_date);
-      formData.append('username', this.videoForm.value.username);
+      formData.append('username', this.currentUserName);
       formData.append('video_file', this.videoFile);
       formData.append('thumbnail', this.thumbnailFile);
 
-      console.log('Form data:', formData.forEach((value, key) => console.log(key, value)));
       if (this.videoId) {
         this.videoService.updateVideo(this.videoId, formData).subscribe(
           {
@@ -137,5 +137,6 @@ export class VideoFormComponent {
     }else	{
       console.log('Form is valid: ',this.videoForm.valid,"VIDEO FILE: ", this.videoFile,"THUMBNILE FILE: ", this.thumbnailFile);
     }
+    
   }
 }
