@@ -36,19 +36,23 @@ export class VideosComponent {
   ) {}
 
   ngOnInit(): void {
+    
     this.route.params.subscribe(params => {
       this.videoId = +params['id'];
       if (this.videoId) {
         this.loadVideo(this.videoId);
         this.loadComments();
+        
       }
     });
+    
   };
 
   private loadVideo(id:number): void {
     this.videoService.getVideo(id).subscribe(video => {
       console.log(video, typeof video);
       this.video = video;
+      this.incrementViews()
     });
     this.videoService.getVideos().subscribe(videoList => {
       this.videoList = videoList;
@@ -60,6 +64,23 @@ export class VideosComponent {
       this.commentArray = data;
       this.currentUserId = localStorage.getItem('userId') || '';
       console.log(this.commentArray);
+    });
+  }
+  incrementLikes(): void {
+    this.videoService.updateLikes(this.videoId, this.video.likes + 1).subscribe(updatedVideo => {
+      this.video = updatedVideo;
+    });
+  }
+
+  incrementDislikes(): void {
+    this.videoService.updateDislikes(this.videoId, this.video.dislikes + 1).subscribe(updatedVideo => {
+      this.video = updatedVideo;
+    });
+  }
+
+  incrementViews(): void {
+    this.videoService.updateViews(this.videoId, this.video.views + 1).subscribe(updatedVideo => {
+      this.video = updatedVideo;
     });
   }
 

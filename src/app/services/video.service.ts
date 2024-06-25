@@ -44,4 +44,15 @@ export class VideoService {
   deleteVideo(id: number): Observable<void> {
     return this.http.delete<void>(`${this.API}/${id}`);
   }
+  updateLikes(id: number, likes: number): Observable<Video> {
+    return this.http.patch<Video>(`${this.API}/${id}/likes`, { likes });
+  }
+
+  updateDislikes(id: number, dislikes: number): Observable<Video> {
+    return this.http.patch<Video>(`${this.API}/${id}/dislikes`, { dislikes });
+  }
+
+  updateViews(id: number, views: number): Observable<Video> {
+    return this.http.patch<Video>(`${this.API}/${id}/views`, { views });
+  }
 }
