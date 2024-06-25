@@ -1,0 +1,10 @@
+<div class="flex flex-wrap mb-4">
+  <div class="w-1/12">
+    <img src="https://via.placeholder.com/50" alt="Avatar" class="rounded-full w-full h-full">
+  </div>
+  <div class="w-11/12 pl-4">
+    <h5 class="text-lg font-bold">{{ comment.user_id }}</h5>
+    <p class="text-gray-600">{{ comment.body }}</p>
+    <small class="text-gray-500">{{ comment.created_at | date: 'hort' }}</small>
+  </div>
+</div>

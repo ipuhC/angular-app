@@ -5,7 +5,9 @@ import { AdminLayoutComponent } from '../../shared/admin-layout/admin-layout.com
 import { VideoService } from '../../services/video.service';
 import { Video } from '../../models/video.model';
 import { HomeNavbarComponent } from '../../shared/home-navbar/home-navbar.component';
-
+import { CommentsComponent } from '../../components/comments/comments.component';
+import { CommentService } from '../../services/comment.service';
+import { Comment } from '../../models/comment.model';
 @Component({
   selector: 'app-videos',
   standalone: true,
@@ -13,20 +15,24 @@ import { HomeNavbarComponent } from '../../shared/home-navbar/home-navbar.compon
     CommonModule,
     AdminLayoutComponent,
     RouterModule,
-    HomeNavbarComponent
+    HomeNavbarComponent,
+    CommentsComponent
   ],
   templateUrl: './videos.component.html',
   styleUrl: './videos.component.css'
 })
 export class VideosComponent {
   videoUrl: string | null = null;
-  videoId: number | null = null;
+  videoId: number = 0;
   video!: Video;
   videoList: Video[] = [];
+  commentArray: Comment[] = [];
+  currentUserId!: string;
 
   constructor(
     private route: ActivatedRoute,
-    private videoService: VideoService
+    private videoService: VideoService,
+    private commentService: CommentService,
   ) {}
 
   ngOnInit(): void {
@@ -34,12 +40,10 @@ export class VideosComponent {
       this.videoId = +params['id'];
       if (this.videoId) {
         this.loadVideo(this.videoId);
-        
+        this.loadComments();
       }
     });
-
   };
-
 
   private loadVideo(id:number): void {
     this.videoService.getVideo(id).subscribe(video => {
@@ -51,9 +55,12 @@ export class VideosComponent {
     });
   }
 
-  comments = [
-    { profilePic: 'path/to/profilePic1.jpg', username: 'User1', text: 'Great video!' },
-    { profilePic: 'path/to/profilePic2.jpg', username: 'User2', text: 'Thanks for sharing!' }
-  ];
+  private loadComments(): void {
+    this.commentService.getCommentsByVideo(this.videoId).subscribe((data: any) => {
+      this.commentArray = data;
+      this.currentUserId = localStorage.getItem('userId') || '';
+      console.log(this.commentArray);
+    });
+  }
 
 }

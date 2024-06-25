@@ -1,0 +1,20 @@
+/* comentario.component.css */
+:host {
+  @apply flex flex-wrap mb-4;
+}
+
+img {
+  @apply rounded-full w-full h-full;
+}
+
+h5 {
+  @apply text-lg font-bold;
+}
+
+p {
+  @apply text-gray-600;
+}
+
+small {
+  @apply text-gray-500;
+}

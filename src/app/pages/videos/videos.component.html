@@ -1,7 +1,7 @@
 <home-navbar />
-<section class="pt-2">
-  <main class="flex flex-row justify-center items-start">
-    <div class="container p-4 md:p-6 lg:p-12 w-1/2">
+<main class="pt-2 grid grid-cols-1 md:grid-cols-7 gap-4">
+  <section class="md:col-span-5 justify-center items-start">
+    <div class="container p-4 md:p-6 lg:p-12">
       <div
         *ngIf="video"
         class="video-player relative mb-4 bg-black rounded-lg overflow-hidden"
@@ -15,7 +15,7 @@
         <p>Loading video...</p>
       </div>
       <div class="w-full mt-6 space-y-4">
-        <h1 class="text-2xl font-bold line-clamp-2">{{ video?.video_name }}</h1>
+        <h1 class="text-2xl font-bold line-clamp-2">{{ video.video_name }}</h1>
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-4">
             <div class="flex items-center space-x-2">
@@ -27,17 +27,16 @@
                 class="rounded-full object-cover"
               />
               <div>
-                <div class="font-medium">{{video?.username}}</div>
+                <div class="font-medium">{{video.username}}</div>
                 <div class="text-sm text-gray-500 dark:text-gray-400">
                   1.2M subscribers
                 </div>
               </div>
             </div>
-            
           </div>
           <div class="flex items-center space-x-4">
             <div class="text-sm text-gray-500 dark:text-gray-400">
-              {{video?.views}} Visualizaciones
+              {{video.views}} Visualizaciones
             </div>
             <div class="flex items-center space-x-2">
               <svg
@@ -106,6 +105,9 @@
         </div>
       </div>
     </div>
+    <app-comment [commentArray]="commentArray" [currentUserId]="currentUserId" [videoId]="videoId"/>
+  </section>
+  <section class="md:col-span-2">
     <div class="flex justify-center md:p-6 lg:p-12 space-x-4">
       <div class="p-4 bg-white rounded-lg shadow-md w-full sm:w-[18rem]">
         <div class="font-medium text-center">More Videos</div>
@@ -135,5 +137,7 @@
         </div>
       </div>
     </div>
-  </main>
-</section>
+  </section>
+</main>
+
+

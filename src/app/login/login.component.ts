@@ -22,8 +22,8 @@ export class LoginComponent implements AfterViewInit {
   login() {
     this.authService.login(this.email, this.password).subscribe({
       next: (response) => {
-        console.log('Login successful!', response);
         alert('Login successful!');
+        console.log('Login successful', response);
         if (response.role === 'admin') {
           this.router.navigate(['/userlist']);
         }else{this.router.navigate(['/']);}

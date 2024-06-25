@@ -135,7 +135,7 @@ export class VideoFormComponent {
         );
       }
     }else	{
-      console.log('Form is valid: ',this.videoForm.valid,"VIDEO FILE: ", this.videoFile,"THUMBNILE FILE: ", this.thumbnailFile);
+      console.log('Form is invalid: ',this.videoForm.valid,"VIDEO FILE: ", this.videoFile,"THUMBNILE FILE: ", this.thumbnailFile);
     }
     
   }

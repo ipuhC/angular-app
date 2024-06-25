@@ -17,25 +17,25 @@ export const routes: Routes = [
     path: 'userlist',
     component: UserlistComponent,
     canActivate: [authGuardGuard],
-    data: { role: 'admin' },
+    data: { roles: ['admin'] },
   },
   {
     path: 'usercreate',
     component: CreateUserComponent,
     canActivate: [authGuardGuard],
-    data: { role: 'admin' },
+    data: { roles: ['admin'] },
   },
   {
     path: 'usercreate/:id/editar',
     component: CreateUserComponent,
     canActivate: [authGuardGuard],
-    data: { role: 'admin' },
+    data: { roles: ['admin'] },
   },
   {
     path: 'themes',
     component: ThemesComponent,
     canActivate: [authGuardGuard],
-    data: { role: 'admin' },
+    data: { roles: ['admin'] },
   },
   {
     path: 'login',
@@ -48,18 +48,26 @@ export const routes: Routes = [
   {
     path: 'videoform',
     component: VideoFormComponent,
+    canActivate: [authGuardGuard],
+    data: { roles: ['admin','user'] },
   },
   {
     path: 'videos',
-    component: VideoListComponent
+    component: VideoListComponent,
+    canActivate: [authGuardGuard],
+    data: { roles: ['admin','user'] },
   },
   {
     path: 'videos/subir',
-    component: VideoFormComponent
+    component: VideoFormComponent,
+    canActivate: [authGuardGuard],
+    data: { roles: ['admin','user'] },
   },
   {
     path: 'videos/:id',
     component: VideosComponent,
+    canActivate: [authGuardGuard],
+    data: { roles: ['admin','user'] },
   },
   {
     path: '**',

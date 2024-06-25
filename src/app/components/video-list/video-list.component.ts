@@ -30,11 +30,9 @@ export class VideoListComponent implements OnInit {
   }
 
   filter(): void {
-    console.log(this.searchTitle, this.searchUsername);
     this.filteredVideos = this.videos.filter(video =>
       video.video_name.toLowerCase().includes(this.searchTitle.toLowerCase()) &&
       video.username.toLowerCase().includes(this.searchUsername.toLowerCase())
     );
-    console.log('estos son los videos filtrados',this.filteredVideos);
   }
 }
