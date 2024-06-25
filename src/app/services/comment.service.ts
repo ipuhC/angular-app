@@ -29,6 +29,6 @@ export class CommentService {
 
   // Eliminar un comentario
   deleteComment(commentId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${commentId}`);
+    return this.http.delete<void>(`${this.apiUrlCreate}/${commentId}`);
   }
 }
