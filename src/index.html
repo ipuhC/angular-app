@@ -18,6 +18,13 @@
       });
     };
   </script>
+  <script>
+    // Apply the font from localStorage if available
+    (function() {
+      var font = localStorage.getItem('font') || 'Arial, sans-serif';
+      document.documentElement.style.fontFamily = font;
+    })();
+  </script>
 </head>
 <body>
   <app-root></app-root>

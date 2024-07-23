@@ -1,21 +1,20 @@
-<!-- home.component.html -->
-<div [ngStyle]="{'background-color': backgroundColor}" class="h-screen w-full">
+<div [ngStyle]="{'background-color': primaryColor}" class="h-screen w-full">
   <home-navbar/>
   <main>
-    <section class="bg-gray-100 py-20" [ngStyle]="{'background-color': backgroundColor}">
+    <section class="py-20" [ngStyle]="{'background-color': primaryColor}">
       <div class="container mx-auto max-w-7xl px-4 md:px-6">
         <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
           <div class="flex flex-col items-start justify-center">
-            <h1 class="text-4xl font-bold text-gray-900 md:text-5xl">
+            <h1 class="text-4xl font-bold" [ngStyle]="{'color': textColor}">
               Unlock Your Business Potential
             </h1>
-            <p class="mt-4 text-lg text-gray-600">
+            <p class="mt-4 text-lg" [ngStyle]="{'color': complementaryColor}">
               Our cutting-edge platform empowers you to streamline your operations and drive growth like never before.
             </p>
             <a
               class="mt-8 inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
               routerLink="#"
-              [ngStyle]="{'background-color': secondaryColor}"
+              [ngStyle]="{'background-color': buttonColor, 'color': textColor}"
             >Get Started</a>
           </div>
           <div class="flex justify-center">
@@ -33,10 +32,10 @@
     </section>
     <section class="py-20" id="features">
       <div class="container mx-auto max-w-7xl px-4 md:px-6">
-        <h2 class="text-center text-3xl font-bold text-gray-900 md:text-4xl">
+        <h2 class="text-center text-3xl font-bold" [ngStyle]="{'color': textColor}">
           Features that Empower Your Business
         </h2>
-        <p class="mx-auto mt-4 max-w-2xl text-center text-gray-600">
+        <p class="mx-auto mt-4 max-w-2xl text-center" [ngStyle]="{'color': complementaryColor}">
           Our platform offers a comprehensive suite of tools to streamline your operations and drive growth.
         </p>
         <div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -47,8 +46,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0 0 15 0m-15 0a7.5 7.5 0 1 1 15 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077 1.41-.513m14.095-5.13 1.41-.513M5.106 17.785l1.15-.964m11.49-9.642 1.149-.964M7.501 19.795l.75-1.3m7.5-12.99.75-1.3m-6.063 16.658.26-1.477m2.605-14.772.26-1.477m0 17.726-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205 12 12m6.894 5.785-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495" />
               </svg>
             </div>
-            <h3 class="mt-4 text-xl font-bold text-gray-900">Automation</h3>
-            <p class="mt-2 text-gray-600">
+            <h3 class="mt-4 text-xl font-bold" [ngStyle]="{'color': textColor}">Automation</h3>
+            <p class="mt-2" [ngStyle]="{'color': complementaryColor}">
               Streamline your workflows with our powerful automation tools, saving you time and effort.
             </p>
           </div>
@@ -59,8 +58,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
               </svg>
             </div>
-            <h3 class="mt-4 text-xl font-bold text-gray-900">Analytics</h3>
-            <p class="mt-2 text-gray-600">
+            <h3 class="mt-4 text-xl font-bold" [ngStyle]="{'color': textColor}">Analytics</h3>
+            <p class="mt-2" [ngStyle]="{'color': complementaryColor}">
               Gain valuable insights into your business with our advanced analytics tools.
             </p>
           </div>
@@ -71,30 +70,30 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
               </svg>
             </div>
-            <h3 class="mt-4 text-xl font-bold text-gray-900">Scalability</h3>
-            <p class="mt-2 text-gray-600">
+            <h3 class="mt-4 text-xl font-bold" [ngStyle]="{'color': textColor}">Scalability</h3>
+            <p class="mt-2" [ngStyle]="{'color': complementaryColor}">
               Scale your business with ease using our highly scalable infrastructure.
             </p>
           </div>
         </div>
       </div>
     </section>
-    <section class="bg-gray-100 py-20" id="pricing" [ngStyle]="{'background-color': backgroundColor}">
+    <section class="py-20" id="pricing">
       <div class="container mx-auto max-w-7xl px-4 md:px-6">
-        <h2 class="text-center text-3xl font-bold text-gray-900 md:text-4xl">
+        <h2 class="text-center text-3xl font-bold" [ngStyle]="{'color': textColor}">
           Pricing that Fits Your Business
         </h2>
-        <p class="mx-auto mt-4 max-w-2xl text-center text-gray-600">
+        <p class="mx-auto mt-4 max-w-2xl text-center" [ngStyle]="{'color': complementaryColor}">
           Choose the plan that best suits your needs and budget.
         </p>
         <div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
-          <div class="rounded-lg bg-white p-6 shadow-md">
-            <h3 class="text-xl font-bold text-gray-900">Starter</h3>
-            <p class="mt-2 text-4xl font-bold text-gray-900">
+          <div class="rounded-lg p-6 shadow-md" [ngStyle]="{'background-color': secondaryColor}">
+            <h3 class="text-xl font-bold" [ngStyle]="{'color': textColor}">Starter</h3>
+            <p class="mt-2 text-4xl font-bold" [ngStyle]="{'color': textColor}">
               $9
-              <span class="text-lg font-normal text-gray-600">/month</span>
+              <span class="text-lg font-normal" [ngStyle]="{'color': complementaryColor}">/month</span>
             </p>
-            <ul class="mt-6 space-y-4 text-gray-600">
+            <ul class="mt-6 space-y-4" [ngStyle]="{'color': complementaryColor}">
               <li class="flex items-center">
                 Up to 5 users
               </li>
@@ -108,16 +107,16 @@
             <a
               class="mt-6 inline-flex w-full items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-950 focus:ring-offset-2"
               routerLink="#"
-              [ngStyle]="{'background-color': secondaryColor}"
+              [ngStyle]="{'background-color': buttonColor, 'color': textColor}"
             >Get Started</a>
           </div>
-          <div class="rounded-lg bg-white p-6 shadow-md">
-            <h3 class="text-xl font-bold text-gray-900">Pro</h3>
-            <p class="mt-2 text-4xl font-bold text-gray-900">
+          <div class="rounded-lg p-6 shadow-md" [ngStyle]="{'background-color': secondaryColor}">
+            <h3 class="text-xl font-bold" [ngStyle]="{'color': textColor}">Pro</h3>
+            <p class="mt-2 text-4xl font-bold" [ngStyle]="{'color': textColor}">
               $29
-              <span class="text-lg font-normal text-gray-600">/month</span>
+              <span class="text-lg font-normal" [ngStyle]="{'color': complementaryColor}">/month</span>
             </p>
-            <ul class="mt-6 space-y-4 text-gray-600">
+            <ul class="mt-6 space-y-4" [ngStyle]="{'color': complementaryColor}">
               <li class="flex items-center">
                 Up to 20 users
               </li>
@@ -131,16 +130,16 @@
             <a
               class="mt-6 inline-flex w-full items-center justify-center rounded-md  px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-950 focus:ring-offset-2"
               routerLink="#"
-              [ngStyle]="{'background-color': secondaryColor}"
+              [ngStyle]="{'background-color': buttonColor, 'color': textColor}"
             >Get Started</a>
           </div>
-          <div class="rounded-lg bg-white p-6 shadow-md">
-            <h3 class="text-xl font-bold text-gray-900">Enterprise</h3>
-            <p class="mt-2 text-4xl font-bold text-gray-900">
+          <div class="rounded-lg p-6 shadow-md" [ngStyle]="{'background-color': secondaryColor}">
+            <h3 class="text-xl font-bold" [ngStyle]="{'color': textColor}">Enterprise</h3>
+            <p class="mt-2 text-4xl font-bold" [ngStyle]="{'color': textColor}">
               $99
-              <span class="text-lg font-normal text-gray-600">/month</span>
+              <span class="text-lg font-normal" [ngStyle]="{'color': complementaryColor}">/month</span>
             </p>
-            <ul class="mt-6 space-y-4 text-gray-600">
+            <ul class="mt-6 space-y-4" [ngStyle]="{'color': complementaryColor}">
               <li class="flex items-center">
                 Unlimited users
               </li>
@@ -154,7 +153,7 @@
             <a
               class="mt-6 inline-flex w-full items-center justify-center rounded-md  px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-950 focus:ring-offset-2"
               routerLink="#"
-              [ngStyle]="{'background-color': secondaryColor}"
+              [ngStyle]="{'background-color': buttonColor, 'color': textColor}"
             >Get Started</a>
           </div>
         </div>
@@ -164,12 +163,12 @@
       <div class="container mx-auto max-w-7xl px-4 md:px-6">
         <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
           <div>
-            <h2 class="text-3xl font-bold text-gray-900 md:text-4xl">About Acme Inc</h2>
-            <p class="mt-4 text-gray-600">
+            <h2 class="text-3xl font-bold" [ngStyle]="{'color': textColor}">About Acme Inc</h2>
+            <p class="mt-4" [ngStyle]="{'color': complementaryColor}">
               Acme Inc is a leading provider of innovative business solutions. Our mission is to empower our clients
               with the tools and technologies they need to thrive in today's competitive landscape.
             </p>
-            <p class="mt-4 text-gray-600">
+            <p class="mt-4" [ngStyle]="{'color': complementaryColor}">
               With years of industry experience and a team of dedicated professionals, we are committed to
               delivering exceptional service and driving the success of our clients.
             </p>
@@ -187,12 +186,12 @@
         </div>
       </div>
     </section>
-    <section class="bg-gray-100 py-20" id="contact" [ngStyle]="{'background-color': backgroundColor}">
+    <section class="py-20" id="contact" [ngStyle]="{'background-color': primaryColor}">
       <div class="container mx-auto max-w-7xl px-4 md:px-6">
-        <h2 class="text-center text-3xl font-bold text-gray-900 md:text-4xl">
+        <h2 class="text-center text-3xl font-bold" [ngStyle]="{'color': textColor}">
           Get in Touch
         </h2>
-        <p class="mx-auto mt-4 max-w-2xl text-center text-gray-600">
+        <p class="mx-auto mt-4 max-w-2xl text-center" [ngStyle]="{'color': complementaryColor}">
           We would love to hear from you. Contact us for any queries or support.
         </p>
       </div>

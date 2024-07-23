@@ -1,4 +1,4 @@
-<div class="w-full flex justify-start mx-auto ml-14 mb-10 rounded-lg ">
+<div class="flex justify-start mb-10 rounded-lg ">
  <div class="mb-4 w-1/2 ">
   <h2 class="text-2xl font-bold mb-6 text-center">Comentarios</h2>
   <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
@@ -31,7 +31,14 @@
 
   <div class="mt-6">
     <div class="flex flex-wrap mb-4 border-b border-gray-200 pb-2" *ngFor="let comment of commentArray">
-      <div class="w-11/12 pl-4 ">
+      <div class="w-2/12 flex items-center justify-center">
+        <img
+        [src]="'http://127.0.0.1:8000/storage/' + comment.user.profile_photo"
+          alt="Profile Photo"
+          class="w-12 h-12 rounded-full object-cover"
+        />
+      </div>
+      <div class="w-9/12 pl-4">
         <h5 class="text-lg font-bold">{{comment.user.name}}</h5>
         <p class="text-gray-600">{{ comment.body }}</p>
         <small class="text-gray-500">{{ comment.created_at | date: 'medium' }}</small>
@@ -41,11 +48,10 @@
           (click)="deleteComment(comment.id)"
           class="py-1 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
         >
-          
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
         </button>
       </div>
-    </div>
+    </div>  
   </div>
  </div>
 </div>

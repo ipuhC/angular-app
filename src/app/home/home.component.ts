@@ -12,15 +12,19 @@ import { HomeNavbarComponent } from '../shared/home-navbar/home-navbar.component
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit{
-  primaryColor: string = '#000000';
-  secondaryColor: string = '#4a4a4a';
-  backgroundColor: string = '#ffffff';
+  primaryColor: string = '';
+  secondaryColor: string = '';
+  complementaryColor: string = '';
+  buttonColor: string = '';
+  textColor: string = '';
   date = new Date().getFullYear();
   
   ngOnInit() {
-    this.primaryColor = localStorage.getItem('primaryColor') || '#000000';
-    this.secondaryColor = localStorage.getItem('secondaryColor') || '#4a4a4a';
-    this.backgroundColor = localStorage.getItem('backgroundColor') || '#ffffff';
+    this.primaryColor = localStorage.getItem('primaryColor') || '#1f2937';
+    this.secondaryColor = localStorage.getItem('secondaryColor') || '#111827';
+    this.complementaryColor = localStorage.getItem('complementaryColor') || '#4b5563';
+    this.buttonColor = localStorage.getItem('buttonColor') || '#9ca3af';
+    this.textColor = localStorage.getItem('textColor') || '#dbe7e4';
   }
 
   constructor(private authService: AuthService,private router: Router) {}

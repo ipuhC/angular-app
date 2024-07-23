@@ -8,75 +8,71 @@ import { AdminLayoutComponent } from '../shared/admin-layout/admin-layout.compon
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, RouterLink,ReactiveFormsModule, AdminLayoutComponent],
+  imports: [CommonModule, RouterLink, ReactiveFormsModule, AdminLayoutComponent],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit {
   userRegisterForm: FormGroup;
   isFormSubmitted = false;
-  name: string = '';
-  email: string = '';
-  password: string = '';
-  passwordConfirmation: string = '';
+  profilePhoto: File | null = null;
 
-  constructor(private authService: AuthService,private router: Router,private formBuilder: FormBuilder,) {
-    this.userRegisterForm = new FormGroup({
-      name: new FormControl('', [
-        Validators.required,
-        Validators.minLength(4),
-      ]),
-      email: new FormControl('', [
-        Validators.required,
-        Validators.email,
-        Validators.minLength(8),
-      ]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.minLength(8),
-      ]),
-      passwordConfirmation: new FormControl('', [
-        Validators.required,
-        Validators.minLength(8),
-      ]),
-    });
-   }
-  
-   ngOnInit(): void {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {
     this.userRegisterForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(4)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(4)]],
-      passwordConfirmation: ['', [Validators.required, Validators.minLength(4)]],
+      email: ['', [Validators.required, Validators.email, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      passwordConfirmation: ['', [Validators.required, Validators.minLength(8)]],
+      profile_photo: [null]
     });
   }
 
+  ngOnInit(): void {}
+
+  onFileChange(event: any): void {
+    console.log("se subio una imagen");
+    if (event.target.files.length > 0) {
+      this.profilePhoto = event.target.files[0];
+      console.log(this.profilePhoto);
+    }
+  }
 
   onSubmit(): void {
     this.isFormSubmitted = true;
 
     if (this.userRegisterForm.invalid) {
-      
-      alert('Invalid form');
+      alert('Formulario inválido');
       return;
     }
 
     const { name, email, password, passwordConfirmation } = this.userRegisterForm.value;
 
     if (password !== passwordConfirmation) {
-      alert('Passwords do not match');
-      return; // You can add an error message here to indicate that passwords do not match
+      alert('Las contraseñas no coinciden');
+      return;
     }
 
-    this.authService.register(name, email, password, passwordConfirmation).subscribe({
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('password_confirmation', passwordConfirmation);
+    if (this.profilePhoto) {
+      formData.append('profile_photo', this.profilePhoto);
+    }
+
+    this.authService.register(formData).subscribe({
       next: (response) => {
-        console.log('Registration successful!', response);
+        console.log('Registro exitoso!', response);
         this.router.navigate(['/login']);
       },
       error: (error) => {
-        console.error('Registration failed', error);
+        console.error('Fallo en el registro', error);
       }
     });
   }
-  
 }

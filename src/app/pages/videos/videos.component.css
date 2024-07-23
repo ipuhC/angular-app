@@ -267,4 +267,46 @@
   .sm\:mt-6 {
     margin-top: 1.5rem;
   }
+  @keyframes likeAnimation {
+    0% {
+      transform: scale(1) translateY(0);
+      filter: brightness(1);
+    }
+    50% {
+      transform: scale(1.5) translateY(-10px);
+      filter: brightness(1.5);
+    }
+    100% {
+      transform: scale(1) translateY(0);
+      filter: brightness(1);
+    }
+  }
   
+  .like-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .like-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 70%);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .animate-like {
+    animation: likeAnimation 0.5s ease-in-out;
+  }
+  
+  .animate-like::before {
+    transform: translate(-50%, -50%) scale(1);
+  }

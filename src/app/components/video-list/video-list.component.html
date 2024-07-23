@@ -1,12 +1,31 @@
 <home-navbar></home-navbar>
 
 <div class="filter-container flex justify-center gap-4 mb-4 mt-2">
-  <input type="text" [(ngModel)]="searchTitle" (input)="filter()" placeholder="Filtrar por titulo" class="p-2 border rounded">
-  <input type="text" [(ngModel)]="searchUsername" (input)="filter()" placeholder="Filtrar por usuario" class="p-2 border rounded">
+  <input 
+    type="text" 
+    [(ngModel)]="searchTitle" 
+    (input)="filter()" 
+    placeholder="Filtrar por titulo" 
+    class="p-2 border rounded" 
+    [ngStyle]="{'background-color': primaryColor, 'color': textColor, 'border-color': complementaryColor}"
+  >
+  <input 
+    type="text" 
+    [(ngModel)]="searchUsername" 
+    (input)="filter()" 
+    placeholder="Filtrar por usuario" 
+    class="p-2 border rounded"
+    [ngStyle]="{'background-color': primaryColor, 'color': textColor, 'border-color': complementaryColor}"
+  >
 </div>
 
 <div class="flex flex-row justify-center gap-2" *ngIf="filteredVideos.length > 0; else noFilter">
-  <div [routerLink]="['/videos', video.id]" class="rounded-lg overflow-hidden hover:bg-slate-100 hover:scale-105 transition-all" *ngFor="let video of filteredVideos">
+  <div 
+    [routerLink]="['/videos', video.id]" 
+    class="rounded-lg overflow-hidden hover:bg-slate-100 hover:scale-105 transition-all" 
+    *ngFor="let video of filteredVideos"
+    [ngStyle]="{'border-color': complementaryColor}"
+  >
     <div class="relative">
       <img [src]="video.thumbnail" alt="Thumbnail" class="w-[310px] h-[174px] object-cover" />
       <div class="absolute inset-0 flex items-center justify-center">
@@ -26,16 +45,21 @@
         </svg>
       </div>
     </div>
-    <div class="p-4 border-2 rounded-b-lg">
-      <h3 class="text-lg font-semibold">{{ video.video_name }}</h3>
-      <p class="text-sm text-gray-400">{{video.username}}</p>
+    <div class="p-4 border-2 rounded-b-lg" [ngStyle]="{'border-color': complementaryColor, 'background-color': primaryColor}">
+      <h3 class="text-lg font-semibold" [ngStyle]="{'color': textColor}">{{ video.video_name }}</h3>
+      <p class="text-sm" [ngStyle]="{'color': complementaryColor}">{{video.username}}</p>
     </div>
   </div>
 </div>
 
 <ng-template #noFilter>
   <div class="flex flex-row justify-center gap-2">
-    <div [routerLink]="['/videos', video.id]" class="rounded-lg overflow-hidden hover:bg-slate-100 hover:scale-105 transition-all" *ngFor="let video of videos">
+    <div 
+      [routerLink]="['/videos', video.id]" 
+      class="rounded-lg overflow-hidden hover:bg-slate-100 hover:scale-105 transition-all" 
+      *ngFor="let video of videos"
+      [ngStyle]="{'border-color': complementaryColor}"
+    >
       <div class="relative">
         <img [src]="video.thumbnail" alt="Thumbnail" class="w-[310px] h-[174px] object-cover" />
         <div class="absolute inset-0 flex items-center justify-center">
@@ -53,12 +77,11 @@
           >
             <polygon points="6 3 20 12 6 21 6 3" />
           </svg>
-          
         </div>
       </div>
-      <div class="p-4 border-2 rounded-b-lg">
-        <h3 class="text-lg font-semibold">{{ video.video_name }}</h3>
-        <p class="text-sm text-gray-400">{{video.username}}</p>
+      <div class="p-4 border-2 rounded-b-lg" [ngStyle]="{'border-color': complementaryColor, 'background-color': primaryColor}">
+        <h3 class="text-lg font-semibold" [ngStyle]="{'color': textColor}">{{ video.video_name }}</h3>
+        <p class="text-sm" [ngStyle]="{'color': complementaryColor}">{{video.username}}</p>
       </div>
     </div>
   </div>

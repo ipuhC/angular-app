@@ -10,6 +10,7 @@ import { ThemesComponent } from './pages/themes/themes.component';
 import { VideoFormComponent } from './pages/video-form/video-form.component';
 import { VideosComponent } from './pages/videos/videos.component';
 import { VideoListComponent } from './components/video-list/video-list.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -44,6 +45,10 @@ export const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
+  },
+  {
+    path: 'profile',
+    component: UserProfileComponent,
   },
   {
     path: 'videoform',

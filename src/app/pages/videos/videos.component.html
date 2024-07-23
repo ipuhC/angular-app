@@ -1,149 +1,155 @@
 <home-navbar />
-<main class="pt-2 grid grid-cols-1 md:grid-cols-7 gap-4">
-  <section class="md:col-span-5 justify-center items-start">
-    <div class="container p-4 md:p-6 lg:p-12">
-      <div
-        *ngIf="video"
-        class="video-player relative mb-4 bg-black rounded-lg overflow-hidden"
-      >
-        <video class="w-full h-auto" controls>
+
+<main class="display flex flex-row gap-3 mt-5 ml-5" [ngStyle]="{'background-color': primaryColor}" >
+  <aside>
+    <subscriptions-list></subscriptions-list>
+  </aside>
+
+  <section class="w-full max-w-screen-lg mx-auto p-4 md:w-[60%]">
+    <div>
+      <div *ngIf="video" class="video-player relative mb-4 bg-black rounded-lg overflow-hidden">
+        <video controls>
           <source [src]="video.video_file" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
-      <div *ngIf="!video" class="text-center text-gray-500">
+      <div *ngIf="!video" [ngStyle]="{ color: complementaryColor }">
         <p>Loading video...</p>
       </div>
-      <div class="w-full mt-6 space-y-4">
-        <h1 class="text-2xl font-bold line-clamp-2">{{ video.video_name }}</h1>
+      <div>
+        <h1 class="text-2xl font-bold line-clamp-2" [ngStyle]="{ color: textColor }">{{ video.video_name }}</h1>
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-4">
             <div class="flex items-center space-x-2">
-              <img
-                src="/assets/profile.png"
-                width="40"
-                height="40"
-                alt="Channel Avatar"
-                class="rounded-full object-cover"
-              />
+              <img src="/assets/profile.png" width="40" height="40" alt="Channel Avatar"
+                class="rounded-full object-cover" />
               <div>
-                <div class="font-medium">{{ video.username }}</div>
-                <div class="text-sm text-gray-500 dark:text-gray-400">
+                <div class="font-medium" [ngStyle]="{'color': textColor}">{{ video.username }}</div>
+                <div class="text-sm" [ngStyle]="{'color': complementaryColor}">
                   1.2M subscribers
                 </div>
               </div>
             </div>
+            <button *ngIf="!isSubscribed(video.username)" (click)="subscribeToUser(video.username)"
+              [ngStyle]="{'background-color': buttonColor, 'color': textColor}"
+              class="p-2 rounded-md shadow-md hover:bg-opacity-90 transition-colors duration-300">
+              Suscribirse
+            </button>
+            <button *ngIf="isSubscribed(video.username)"
+              [ngStyle]="{'background-color': buttonColor, 'color': textColor}"
+              class="p-2 rounded-md shadow-md cursor-default">
+              Ya estás suscrito
+            </button>
           </div>
           <div class="flex items-center space-x-4">
-            <div class="text-sm text-gray-500 dark:text-gray-400">
+            <div class="text-sm" [ngStyle]="{'color': complementaryColor}">
               {{ video.views }} Visualizaciones
             </div>
-
-            <div class="flex items-center space-x-2">
-              <button
-                (click)="incrementLikes()"
-                class="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md"
-              >
-                <svg
-                  class="w-6 h-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+            <div class="flex items-center space-x-2  ">
+              <button (click)="incrementLikes()" class="like-button rounded-lg " [ngClass]="{'animate-like': animateLike}" [ngStyle]="{'background-color': buttonColor, 'color': textColor}">
+                <svg class="w-6 h-6 m-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M7 10v12" />
-                  <path
-                    d="M15 5.88L14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"
-                  />
+                  <path d="M15 5.88L14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 1 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z" />
                 </svg>
               </button>
-              <span class="text-sm text-gray-500 dark:text-gray-400">{{
-                video.likes
-              }}</span>
+              <span class="text-sm" [ngStyle]="{'color': complementaryColor}">{{ video.likes }}</span>
             </div>
-
             <div class="flex items-center space-x-2">
-              <button
-                (click)="incrementDislikes()"
-                class="p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md"
-              >
-                <svg
-                  class="w-6 h-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+              <button (click)="incrementDislikes()" class="p-1 rounded-md"
+                [ngStyle]="{'background-color': buttonColor, 'color': textColor}">
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M17 14V2" />
                   <path
-                    d="M9 18.12L10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22h0a3.13 3.13 0 0 1-3-3.88Z"
-                  />
+                    d="M9 18.12L10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22h0a3.13 3.13 0 0 1-3-3.88Z" />
                 </svg>
               </button>
-              <span class="text-sm text-gray-500 dark:text-gray-400">{{
-                video.dislikes
-              }}</span>
+              <span class="text-sm" [ngStyle]="{'color': complementaryColor}">{{ video.dislikes }}</span>
             </div>
-            <button (click)="openShareModal()" class="btn btn-primary">Compartir</button>
+            <button (click)="openShareModal()" class="btn btn-primary"
+              [ngStyle]="{'background-color': buttonColor, 'color': textColor}">Compartir</button>
             <div *ngIf="isShareModalOpen" class="fixed z-10 inset-0 overflow-y-auto">
               <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                 <div class="fixed inset-0 transition-opacity" aria-hidden="true">
                   <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
                 </div>
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">​</span>
-                <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
-                  <button (click)="closeShareModal()" class="transform transition-transform duration-200 hover:scale-110 absolute top-2 right-2 text-gray-600 hover:text-gray-900">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                <div
+                  class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                  <button (click)="closeShareModal()"
+                    class="transform transition-transform duration-200 hover:scale-110 absolute top-2 right-2"
+                    [ngStyle]="{'color': textColor}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                      stroke="currentColor" class="w-6 h-6">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
                   <div>
                     <div class="mt-3 text-center sm:mt-5">
-                      <h3 class="text-lg leading-6 font-medium text-gray-900">Compartir en redes sociales</h3>
+                      <h3 class="text-lg leading-6 font-medium" [ngStyle]="{'color': textColor}">Compartir en redes
+                        sociales</h3>
                       <div class="mt-2">
-                        <p class="text-sm text-gray-500">Elige una red social para compartir este video:</p>
+                        <p class="text-sm" [ngStyle]="{'color': complementaryColor}">Elige una red social para compartir
+                          este video:</p>
                         <div class="flex justify-around mt-4">
-                          <button (click)="shareOnWhatsApp(video)" class="transform transition-transform duration-200 hover:scale-110 size-24 bg-transparent"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
-                            <g fill="#2de735" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M25,2c-12.682,0 -23,10.318 -23,23c0,3.96 1.023,7.854 2.963,11.29l-2.926,10.44c-0.096,0.343 -0.003,0.711 0.245,0.966c0.191,0.197 0.451,0.304 0.718,0.304c0.08,0 0.161,-0.01 0.24,-0.029l10.896,-2.699c3.327,1.786 7.074,2.728 10.864,2.728c12.682,0 23,-10.318 23,-23c0,-12.682 -10.318,-23 -23,-23zM36.57,33.116c-0.492,1.362 -2.852,2.605 -3.986,2.772c-1.018,0.149 -2.306,0.213 -3.72,-0.231c-0.857,-0.27 -1.957,-0.628 -3.366,-1.229c-5.923,-2.526 -9.791,-8.415 -10.087,-8.804c-0.295,-0.389 -2.411,-3.161 -2.411,-6.03c0,-2.869 1.525,-4.28 2.067,-4.864c0.542,-0.584 1.181,-0.73 1.575,-0.73c0.394,0 0.787,0.005 1.132,0.021c0.363,0.018 0.85,-0.137 1.329,1.001c0.492,1.168 1.673,4.037 1.819,4.33c0.148,0.292 0.246,0.633 0.05,1.022c-0.196,0.389 -0.294,0.632 -0.59,0.973c-0.296,0.341 -0.62,0.76 -0.886,1.022c-0.296,0.291 -0.603,0.606 -0.259,1.19c0.344,0.584 1.529,2.493 3.285,4.039c2.255,1.986 4.158,2.602 4.748,2.894c0.59,0.292 0.935,0.243 1.279,-0.146c0.344,-0.39 1.476,-1.703 1.869,-2.286c0.393,-0.583 0.787,-0.487 1.329,-0.292c0.542,0.194 3.445,1.604 4.035,1.896c0.59,0.292 0.984,0.438 1.132,0.681c0.148,0.242 0.148,1.41 -0.344,2.771z"></path></g></g>
+                          <button (click)="shareOnWhatsApp(video)"
+                            class="transform transition-transform duration-200 hover:scale-110 size-24 bg-transparent"><svg
+                              xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100"
+                              viewBox="0,0,256,256">
+                              <g fill="#2de735" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                                stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                                font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                                style="mix-blend-mode: normal">
+                                <g transform="scale(5.12,5.12)">
+                                  <path
+                                    d="M25,2c-12.682,0 -23,10.318 -23,23c0,3.96 1.023,7.854 2.963,11.29l-2.926,10.44c-0.096,0.343 -0.003,0.711 0.245,0.966c0.191,0.197 0.451,0.304 0.718,0.304c0.08,0 0.161,-0.01 0.24,-0.029l10.896,-2.699c3.327,1.786 7.074,2.728 10.864,2.728c12.682,0 23,-10.318 23,-23c0,-12.682 -10.318,-23 -23,-23zM36.57,33.116c-0.492,1.362 -2.852,2.605 -3.986,2.772c-1.018,0.149 -2.306,0.213 -3.72,-0.231c-0.857,-0.27 -1.957,-0.628 -3.366,-1.229c-5.923,-2.526 -9.791,-8.415 -10.087,-8.804c-0.295,-0.389 -2.411,-3.161 -2.411,-6.03c0,-2.869 1.525,-4.28 2.067,-4.864c0.542,-0.584 1.181,-0.73 1.575,-0.73c0.394,0 0.787,0.005 1.132,0.021c0.363,0.018 0.85,-0.137 1.329,1.001c0.492,1.168 1.673,4.037 1.819,4.33c0.148,0.292 0.246,0.633 0.05,1.022c-0.196,0.389 -0.294,0.632 -0.59,0.973c-0.296,0.341 -0.62,0.76 -0.886,1.022c-0.296,0.291 -0.603,0.606 -0.259,1.19c0.344,0.584 1.529,2.493 3.285,4.039c2.255,1.986 4.158,2.602 4.748,2.894c0.59,0.292 0.935,0.243 1.279,-0.146c0.344,-0.39 1.476,-1.703 1.869,-2.286c0.393,-0.583 0.787,-0.487 1.329,-0.292c0.542,0.194 3.445,1.604 4.035,1.896c0.59,0.292 0.984,0.438 1.132,0.681c0.148,0.242 0.148,1.41 -0.344,2.771z">
+                                  </path>
+                                </g>
+                              </g>
                             </svg></button>
-                          <button (click)="shareOnFacebook(video)" class="transform transition-transform duration-200 hover:scale-110 size-24 bg-transparent"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
-                            <path fill="#039be5" d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"></path><path fill="#fff" d="M26.572,29.036h4.917l0.772-4.995h-5.69v-2.73c0-2.075,0.678-3.915,2.619-3.915h3.119v-4.359c-0.548-0.074-1.707-0.236-3.897-0.236c-4.573,0-7.254,2.415-7.254,7.917v3.323h-4.701v4.995h4.701v13.729C22.089,42.905,23.032,43,24,43c0.875,0,1.729-0.08,2.572-0.194V29.036z"></path>
+                          <button (click)="shareOnFacebook(video)"
+                            class="transform transition-transform duration-200 hover:scale-110 size-24 bg-transparent"><svg
+                              xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100"
+                              viewBox="0 0 48 48">
+                              <path fill="#039be5" d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"></path>
+                              <path fill="#fff"
+                                d="M26.572,29.036h4.917l0.772-4.995h-5.69v-2.73c0-2.075,0.678-3.915,2.619-3.915h3.119v-4.359c-0.548-0.074-1.707-0.236-3.897-0.236c-4.573,0-7.254,2.415-7.254,7.917v3.323h-4.701v4.995h4.701v13.729C22.089,42.905,23.032,43,24,43c0.875,0,1.729-0.08,2.572-0.194V29.036z">
+                              </path>
                             </svg></button>
-                          <button (click)="shareOnTwitter(video)" class="transform transition-transform duration-200 hover:scale-110 size-24 bg-transparent"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
-                            <path fill="#03A9F4" d="M42,12.429c-1.323,0.586-2.746,0.977-4.247,1.162c1.526-0.906,2.7-2.351,3.251-4.058c-1.428,0.837-3.01,1.452-4.693,1.776C34.967,9.884,33.05,9,30.926,9c-4.08,0-7.387,3.278-7.387,7.32c0,0.572,0.067,1.129,0.193,1.67c-6.138-0.308-11.582-3.226-15.224-7.654c-0.64,1.082-1,2.349-1,3.686c0,2.541,1.301,4.778,3.285,6.096c-1.211-0.037-2.351-0.374-3.349-0.914c0,0.022,0,0.055,0,0.086c0,3.551,2.547,6.508,5.923,7.181c-0.617,0.169-1.269,0.263-1.941,0.263c-0.477,0-0.942-0.054-1.392-0.135c0.94,2.902,3.667,5.023,6.898,5.086c-2.528,1.96-5.712,3.134-9.174,3.134c-0.598,0-1.183-0.034-1.761-0.104C9.268,36.786,13.152,38,17.321,38c13.585,0,21.017-11.156,21.017-20.834c0-0.317-0.01-0.633-0.025-0.945C39.763,15.197,41.013,13.905,42,12.429"></path>
+                          <button (click)="shareOnTwitter(video)"
+                            class="transform transition-transform duration-200 hover:scale-110 size-24 bg-transparent"><svg
+                              xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100"
+                              viewBox="0 0 48 48">
+                              <path fill="#03A9F4"
+                                d="M42,12.429c-1.323,0.586-2.746,0.977-4.247,1.162c1.526-0.906,2.7-2.351,3.251-4.058c-1.428,0.837-3.01,1.452-4.693,1.776C34.967,9.884,33.05,9,30.926,9c-4.08,0-7.387,3.278-7.387,7.32c0,0.572,0.067,1.129,0.193,1.67c-6.138-0.308-11.582-3.226-15.224-7.654c-0.64,1.082-1,2.349-1,3.686c0,2.541,1.301,4.778,3.285,6.096c-1.211-0.037-2.351-0.374-3.349-0.914c0,0.022,0,0.055,0,0.086c0,3.551,2.547,6.508,5.923,7.181c-0.617,0.169-1.269,0.263-1.941,0.263c-0.477,0-0.942-0.054-1.392-0.135c0.94,2.902,3.667,5.023,6.898,5.086c-2.528,1.96-5.712,3.134-9.174,3.134c-0.598,0-1.183-0.034-1.761-0.104C9.268,36.786,13.152,38,17.321,38c13.585,0,21.017-11.156,21.017-20.834c0-0.317-0.01-0.633-0.025-0.945C39.763,15.197,41.013,13.905,42,12.429">
+                              </path>
                             </svg></button>
-                          <button (click)="shareOnTelegram(video)" class="transform transition-transform duration-200 hover:scale-110 size-24 bg-transparent"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
-                            <path d="M25,2c12.703,0,23,10.297,23,23S37.703,48,25,48S2,37.703,2,25S12.297,2,25,2z M32.934,34.375	c0.423-1.298,2.405-14.234,2.65-16.783c0.074-0.772-0.17-1.285-0.648-1.514c-0.578-0.278-1.434-0.139-2.427,0.219	c-1.362,0.491-18.774,7.884-19.78,8.312c-0.954,0.405-1.856,0.847-1.856,1.487c0,0.45,0.267,0.703,1.003,0.966	c0.766,0.273,2.695,0.858,3.834,1.172c1.097,0.303,2.346,0.04,3.046-0.395c0.742-0.461,9.305-6.191,9.92-6.693	c0.614-0.502,1.104,0.141,0.602,0.644c-0.502,0.502-6.38,6.207-7.155,6.997c-0.941,0.959-0.273,1.953,0.358,2.351	c0.721,0.454,5.906,3.932,6.687,4.49c0.781,0.558,1.573,0.811,2.298,0.811C32.191,36.439,32.573,35.484,32.934,34.375z"></path>
+                          <button (click)="shareOnTelegram(video)"
+                            class="transform transition-transform duration-200 hover:scale-110 size-24 bg-transparent"><svg
+                              xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100"
+                              viewBox="0 0 50 50">
+                              <path
+                                d="M25,2c12.703,0,23,10.297,23,23S37.703,48,25,48S2,37.703,2,25S12.297,2,25,2z M32.934,34.375	c0.423-1.298,2.405-14.234,2.65-16.783c0.074-0.772-0.17-1.285-0.648-1.514c-0.578-0.278-1.434-0.139-2.427,0.219	c-1.362,0.491-18.774,7.884-19.78,8.312c-0.954,0.405-1.856,0.847-1.856,1.487c0,0.45,0.267,0.703,1.003,0.966	c0.766,0.273,2.695,0.858,3.834,1.172c1.097,0.303,2.346,0.04,3.046-0.395c0.742-0.461,9.305-6.191,9.92-6.693	c0.614-0.502,1.104,0.141,0.602,0.644c-0.502,0.502-6.38,6.207-7.155,6.997c-0.941,0.959-0.273,1.953,0.358,2.351	c0.721,0.454,5.906,3.932,6.687,4.49c0.781,0.558,1.573,0.811,2.298,0.811C32.191,36.439,32.573,35.484,32.934,34.375z">
+                              </path>
                             </svg></button>
                         </div>
+                        
+                          <!-- Parte del modal de compartir -->
+<button (click)="shareByEmail(video)" class="btn btn-primary transition-colors hover:bg-opacity-75" [ngStyle]="{'background-color': buttonColor, 'color': textColor}">Compartir por correo</button>
+
                         <div class="mt-4 flex items-center justify-between">
-                          <input 
-                            type="text" 
-                            class="form-input w-full mr-2 border border-gray-300 rounded-md px-2 py-1"
-                            [value]="videoUrl" 
-                            readonly
-                          />
-                          <button 
-                            (click)="copyToClipboard()" 
-                            class="btn btn-secondary"
-                          >
+                          <input type="text" class="form-input w-full mr-2 border border-gray-300 rounded-md px-2 py-1"
+                            [value]="videoUrl" readonly />
+                          <button (click)="copyToClipboard()" class="btn btn-secondary"
+                            [ngStyle]="{'background-color': buttonColor, 'color': textColor}">
                             Copiar
                           </button>
+                          
                         </div>
                       </div>
                     </div>
                   </div>
-                  
+
                 </div>
               </div>
             </div>
@@ -151,35 +157,25 @@
         </div>
       </div>
     </div>
-    <app-comment
-      [commentArray]="commentArray"
-      [currentUserId]="currentUserId"
-      [videoId]="videoId"
-    />
+    <app-comment [commentArray]="commentArray" [currentUserId]="currentUserId" [videoId]="videoId"></app-comment>
   </section>
-  <section class="md:col-span-2">
-    <div class="flex justify-center md:p-6 lg:p-12 space-x-4">
-      <div class="p-4 bg-white rounded-lg shadow-md w-full sm:w-[18rem]">
-        <div class="font-medium text-center">More Videos</div>
-        <div class="grid gap-4 mt-4">
-          <div
-            *ngFor="let video of videoList"
+
+  <section class="w-full md:w-1/4 ml-5" >
+    <div class="md:px-6 lg:px-12">
+      <div class="p-4 bg-white rounded-lg shadow-md w-full sm:w-[18rem]" [ngStyle]="{'background-color': secondaryColor}">
+        <div class="font-medium text-center" [ngStyle]="{'color': textColor}">More Videos</div>
+        <div class="grid gap-4 mt-4" >
+          <div *ngFor="let video of videoList"
             class="flex items-center space-x-4 hover:bg-gray-100 rounded-md p-2 cursor-pointer"
-            [routerLink]="['/videos', video.id]"
-          >
-            <img
-              [src]="video.thumbnail || '/placeholder.svg'"
-              width="80"
-              height="60"
-              alt="Video Thumbnail"
-              class="rounded-md object-cover"
-            />
+            [routerLink]="['/videos', video.id]" [ngStyle]="{'color': complementaryColor}">
+            <img [src]="video.thumbnail || '/placeholder.svg'" width="80" height="60" alt="Video Thumbnail"
+              class="rounded-md object-cover" />
             <div>
-              <div class="font-medium line-clamp-2">{{ video.video_name }}</div>
-              <div class="text-sm text-gray-500 dark:text-gray-400">
+              <div class="font-medium line-clamp-2" [ngStyle]="{'color': textColor}">{{ video.video_name }}</div>
+              <div class="text-sm" [ngStyle]="{'color': complementaryColor}">
                 {{ video.username }}
               </div>
-              <div class="text-sm text-gray-500 dark:text-gray-400">
+              <div class="text-sm" [ngStyle]="{'color': complementaryColor}">
                 {{ video.views }} visualizaciones
               </div>
             </div>

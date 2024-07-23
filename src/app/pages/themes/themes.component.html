@@ -1,31 +1,64 @@
-<app-admin-layout
-  ><main class="flex-1 bg-gray-100 p-4 md:p-6">
-    <!-- theme-settings.component.html -->
+<app-admin-layout>
+  <main class="flex-1 bg-gray-100 p-4 md:p-6">
     <div class="w-1/3 mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+      <div class="mb-6">
+        <h2 class="text-xl font-bold mb-4 text-center">Custom Theme</h2>
+        <form [formGroup]="customThemeForm">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Primary Color</label>
+              <input type="color" formControlName="primaryColor" class="mt-1 block w-full">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Secondary Color</label>
+              <input type="color" formControlName="secondaryColor" class="mt-1 block w-full">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Complementary Color</label>
+              <input type="color" formControlName="complementaryColor" class="mt-1 block w-full">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Button Color</label>
+              <input type="color" formControlName="buttonColor" class="mt-1 block w-full">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Text Color</label>
+              <input type="color" formControlName="textColor" class="mt-1 block w-full">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Font</label>
+              <select formControlName="font" class="mt-1 block w-full p-2 border rounded-md">
+                <option *ngFor="let font of fonts" [value]="font">{{ font }}</option>
+              </select>
+            </div>
+          </div>
+          <button (click)="saveCustomTheme()" class="w-full py-2 px-4 mt-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+            Save Custom Theme
+          </button>
+        </form>
+      </div>
       <h2 class="text-2xl font-bold mb-6 text-center">Theme Settings</h2>
       <div class="grid grid-cols-2 gap-4 mb-6">
-        <div
-          *ngFor="let palette of palettes | keyvalue"
+        <div *ngFor="let palette of palettes | keyvalue"
           class="border rounded-lg p-2 cursor-pointer transform transition-transform hover:scale-105"
-          (click)="saveTheme(palette.key)"
-        >
-          <img
-            [src]="'/assets/' + palette.key + '.png'"
-            alt="{{ palette.key }} preview"
-            class="w-full h-32 object-cover rounded-md"
-          />
-          <div
-            class="mt-2 text-center"
-            [ngStyle]="{
-              'background-color': palette.value.backgroundColor,
-              color: palette.value.primaryColor,
+          (click)="saveTheme(palette.key)">
+          <img [src]="'/assets/' + palette.key + '.png'" alt="{{ palette.key }} preview"
+            class="w-full h-32 object-cover rounded-md" />
+          <div class="mt-2 text-center" [ngStyle]="{
+              'background-color': palette.value.complementaryColor,
+              color: palette.value.textColor,
               border: '2px solid ' + palette.value.secondaryColor
-            }"
-          >
+            }">
             {{ palette.key | titlecase }}
           </div>
         </div>
       </div>
+
+      <button 
+        (click)="resetTheme()" 
+        class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+        Reset Theme
+      </button>
     </div>
-  </main></app-admin-layout
->
+  </main>
+</app-admin-layout>
