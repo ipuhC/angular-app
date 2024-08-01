@@ -96,4 +96,23 @@
       Actualizar perfil
     </button>
   </form>
+
+  <h2>Cambiar Contraseña</h2>
+  <form [formGroup]="changePasswordForm" (ngSubmit)="onChangePasswordSubmit()">
+    <div>
+      <label for="currentPassword">Contraseña Actual:</label>
+      <input id="currentPassword" formControlName="currentPassword" type="password" />
+    </div>
+    <div>
+      <label for="newPassword">Nueva Contraseña:</label>
+      <input id="newPassword" formControlName="newPassword" type="password" />
+    </div>
+    <div>
+      <label for="confirmNewPassword">Confirmar Nueva Contraseña:</label>
+      <input id="confirmNewPassword" formControlName="confirmNewPassword" type="password" />
+    </div>
+    <button type="submit" [disabled]="changePasswordForm.invalid">Actualizar Contraseña</button>
+    <div *ngIf="passwordSuccessMessage">{{ passwordSuccessMessage }}</div>
+    <div *ngIf="passwordErrorMessage">{{ passwordErrorMessage }}</div>
+  </form>
 </div>

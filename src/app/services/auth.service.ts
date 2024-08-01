@@ -49,6 +49,14 @@ export class AuthService {
       );
   }
 
+  changePassword(userId: string, currentPassword: string, newPassword: string): Observable<any> {
+    const body = {
+      current_password: currentPassword,
+      new_password: newPassword,
+    };
+    return this.http.post<any>(`${this.apiUrl}/users/${userId}/change-password`, body);
+  }
+  
   updateProfile(userId: string, formData: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/update-profile/${userId}`, formData).pipe(
       tap(response => {

@@ -16,11 +16,14 @@ import { HomeNavbarComponent } from '../shared/home-navbar/home-navbar.component
 })
 export class UserProfileComponent implements OnInit {
   userProfileForm: FormGroup;
+  changePasswordForm: FormGroup;
   user: any = {};
   profilePhoto: File | null = null;
   userId: string = localStorage.getItem('userId') || '';
   successMessage: string | null = null;
   errorMessage: string | null = null;
+  passwordSuccessMessage: string | null = null;
+  passwordErrorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -31,6 +34,12 @@ export class UserProfileComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       profile_photo: [null]
     });
+
+    this.changePasswordForm = this.fb.group({
+      currentPassword: ['', Validators.required],
+      newPassword: ['', [Validators.required, Validators.minLength(8)]],
+      confirmNewPassword: ['', [Validators.required, Validators.minLength(8)]]
+    }, { validators: this.passwordsMatchValidator });
   }
 
   ngOnInit(): void {
@@ -49,6 +58,32 @@ export class UserProfileComponent implements OnInit {
       }
     });
   }
+
+  onChangePasswordSubmit(): void {
+    if (this.changePasswordForm.valid) {
+      const { currentPassword, newPassword } = this.changePasswordForm.value;
+      this.authService.changePassword(this.userId, currentPassword, newPassword).subscribe({
+        next: (response) => {
+          this.passwordSuccessMessage = 'Contraseña actualizada correctamente.';
+          this.passwordErrorMessage = null;
+          this.changePasswordForm.reset();
+          console.log('Contraseña actualizada:', response);
+        },
+        error: (error) => {
+          this.passwordErrorMessage = 'Error al actualizar la contraseña.';
+          this.passwordSuccessMessage = null;
+          console.error('Error al actualizar la contraseña:', error);
+        }
+      });
+    }
+  }
+
+  passwordsMatchValidator(group: FormGroup): { [key: string]: boolean } | null {
+    const password = group.get('newPassword')?.value;
+    const confirmPassword = group.get('confirmNewPassword')?.value;
+    return password === confirmPassword ? null : { mismatch: true };
+  }
+
 
   onProfilePhotoChange(event: Event): void {
     const input = event.target as HTMLInputElement;
